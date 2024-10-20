@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   sqflite: ^2.3.3+1
   fluttertoast: ^8.2.8
+  video_player: ^2.9.2
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +29,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icon_logo.png
+    - assets/kimono.jpeg
+    - assets/kimono2.jpeg
+    - assets/barong.jpeg
+    - assets/buwan.jpeg
+    - assets/Waltz.mp4
