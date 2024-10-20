@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinikling/home_screen.dart';
 import 'package:tinikling/login_screen.dart';
 import 'package:tinikling/signup_screen.dart';
 import 'package:tinikling/splash_screen.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => const SplashScreen(), // SplashScreen route
         "/login": (context) => const LoginScreen(), // LoginScreen route
         "/register": (context) => const SignupScreen(), // SignupScreen route
+        "/home": (context) => const HomeScreen(), // SignupScreen route
       },
     );
   }

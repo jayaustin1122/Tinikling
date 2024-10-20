@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localdatabase.dart'; // Import your database class here
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,6 +9,37 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final Localdatabase _localDatabase =
+      Localdatabase(); // Instance of your Localdatabase class
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _login() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    // Call the findUser method
+    Map<String, dynamic>? user = await _localDatabase.findUser(email, password);
+
+    if (user != null) {
+      // User found, navigate to home screen
+      Navigator.pushReplacementNamed(
+          context, "/home"); // Update the route as needed
+    } else {
+      // Show an error message if user is not found
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid email or password')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // Email input field
                 TextField(
+                  controller: _emailController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
                     hintText: 'Email',
@@ -55,12 +88,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // Password input field
                 TextField(
+                  controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.visibility_off),
-                      onPressed: () {},
+                      onPressed:
+                          () {}, // Add functionality to toggle password visibility
                     ),
                     hintText: 'Password',
                     border: OutlineInputBorder(
@@ -74,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {}, // Handle forgot password action
                     child: const Text('Forgot password?'),
                   ),
                 ),
@@ -85,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _login, // Call the login function
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(16),
                       backgroundColor: Colors.orangeAccent,
